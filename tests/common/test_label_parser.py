@@ -49,3 +49,25 @@ def test_polygon_to_mask_empty_outside():
     mask = polygon_to_mask(poly, h=5, w=5)
     assert mask.sum() >= 1
     assert mask.max() == 1
+
+
+from common.label_parser import load_sample
+
+
+def test_load_sample_with_polygon(sample_json_with_polygon):
+    s = load_sample(sample_json_with_polygon)
+    assert s["class_code"] == "감귤_궤양병"
+    assert s["has_polygon"] is True
+    assert s["polygon"].shape == (4, 2)
+    assert s["image_size"] == (1920, 1080)
+    assert s["metadata"]["camera"] == "samsung"
+    assert s["metadata"]["location"] == "F02"
+    assert s["metadata"]["env"]["temp"] == 29.6
+
+
+def test_load_sample_without_polygon(sample_json_no_polygon):
+    s = load_sample(sample_json_no_polygon)
+    assert s["class_code"] == "감귤_정상"
+    assert s["has_polygon"] is False
+    assert s["polygon"] is None
+    assert s["metadata"]["env"]["humidity"] == 60.0

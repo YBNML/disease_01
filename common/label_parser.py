@@ -24,3 +24,62 @@ def polygon_to_mask(polygon: np.ndarray, h: int, w: int) -> np.ndarray:
     mask = np.zeros((h, w), dtype=np.uint8)
     cv2.fillPoly(mask, [polygon.astype(np.int32)], 1)
     return mask
+
+
+import json
+from pathlib import Path
+
+
+def _parse_resolution(rsoltn: str) -> tuple:
+    """'(1920,1080)' -> (1920, 1080). Returns (0, 0) on parse failure."""
+    try:
+        cleaned = rsoltn.strip().strip("()")
+        w, h = cleaned.split(",")
+        return (int(w), int(h))
+    except (ValueError, AttributeError):
+        return (0, 0)
+
+
+def _safe_float(v, default=0.0):
+    try:
+        return float(v)
+    except (TypeError, ValueError):
+        return default
+
+
+def load_sample(json_path) -> dict:
+    """Load AI Hub JSON label and return a normalized dict."""
+    json_path = Path(json_path)
+    with open(json_path, "r", encoding="utf-8") as f:
+        d = json.load(f)
+
+    info = d.get("Info", {}) or {}
+    ann = d.get("Annotations", {}) or {}
+    env = d.get("Environment", {}) or {}
+
+    pt_str = ann.get("ANTN_PT")
+    has_polygon = pt_str is not None
+    polygon = parse_antn_pt(pt_str) if has_polygon else None
+
+    return {
+        "json_path": json_path,
+        "image_file_name": info.get("IMAGE_FILE_NM", json_path.stem),
+        "class_code": ann.get("OBJECT_CLASS_CODE"),
+        "has_polygon": has_polygon,
+        "polygon": polygon,
+        "image_size": _parse_resolution(info.get("RSOLTN", "")),
+        "metadata": {
+            "camera": info.get("CMRA_INFO"),
+            "location": info.get("LCINFO"),
+            "place_type": info.get("IMAGE_OBTAIN_PLACE_TY"),
+            "growth_stage": info.get("GRWH_STEP_CODE"),
+            "date": info.get("OCPRD"),
+            "env": {
+                "solar": _safe_float(env.get("SOLRAD_QY")),
+                "rain": _safe_float(env.get("AFR")),
+                "temp": _safe_float(env.get("TP")),
+                "humidity": _safe_float(env.get("HD")),
+                "soil_moisture": _safe_float(env.get("SOIL_MITR")),
+            },
+        },
+    }
