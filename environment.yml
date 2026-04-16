@@ -1,0 +1,26 @@
+name: disease_01
+channels:
+  - pytorch
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - numpy
+  - pandas
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - pyyaml
+  - tqdm
+  - pillow
+  - opencv
+  - pytest
+  - pip:
+      - torch
+      - torchvision
+      - torchmetrics
+      - tensorboard
+      - albumentations
+      - ultralytics
+      - segmentation-models-pytorch
+      - timm
