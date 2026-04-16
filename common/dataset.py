@@ -3,7 +3,8 @@ import cv2
 import torch
 from torch.utils.data import Dataset
 
-from .label_parser import load_sample
+import numpy as np
+from .label_parser import load_sample, polygon_to_mask
 
 
 CLASS_NAME_TO_LABEL = {"감귤_정상": 0, "감귤_궤양병": 1}
@@ -76,6 +77,53 @@ class ClassificationDataset(Dataset):
         return {
             "image": image,
             "label": label,
+            "metadata": info["metadata"],
+            "image_path": str(img_path),
+        }
+
+
+SEG_CLASS_FROM_CODE = {"감귤_정상": 1, "감귤_궤양병": 2}
+
+
+class SegmentationDataset(Dataset):
+    """Only images that have polygon labels. Produces a 3-class semantic mask:
+    0 = background, 1 = 정상 감귤, 2 = 궤양병 감귤.
+    Transform (if given) is called as transform(image, mask) and should return a
+    dict {'image': ..., 'mask': ...} (albumentations style)."""
+
+    def __init__(self, database_root, split: str = "train", transform=None):
+        if split not in SPLIT_DIRS:
+            raise ValueError(f"split must be 'train' or 'val', got {split!r}")
+        self.database_root = Path(database_root)
+        self.split = split
+        self.transform = transform
+        self.items = [
+            (ip, jp) for ip, jp in _iter_label_files(self.database_root, split)
+            if load_sample(jp)["has_polygon"]
+        ]
+
+    def __len__(self) -> int:
+        return len(self.items)
+
+    def __getitem__(self, idx: int) -> dict:
+        img_path, json_path = self.items[idx]
+        info = load_sample(json_path)
+        image = cv2.imread(str(img_path), cv2.IMREAD_COLOR)
+        if image is None:
+            raise RuntimeError(f"failed to read image: {img_path}")
+        h, w = image.shape[:2]
+
+        cls_value = SEG_CLASS_FROM_CODE[info["class_code"]]
+        binary = polygon_to_mask(info["polygon"], h=h, w=w)  # 0/1
+        mask = (binary * cls_value).astype(np.uint8)         # 0 or cls_value
+
+        if self.transform is not None:
+            out = self.transform(image=image, mask=mask)
+            image, mask = out["image"], out["mask"]
+
+        return {
+            "image": image,
+            "mask": mask,
             "metadata": info["metadata"],
             "image_path": str(img_path),
         }
