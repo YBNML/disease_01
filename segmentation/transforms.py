@@ -14,6 +14,11 @@ IMAGENET_MEAN = (0.485, 0.456, 0.406)
 IMAGENET_STD = (0.229, 0.224, 0.225)
 
 
+def _bgr_to_rgb(image, **kw):
+    """Convert BGR image to RGB (needed for pickle-compatibility with multiprocessing)."""
+    return image[..., ::-1].copy()
+
+
 def build_transforms(image_size: int = 512, train: bool = True):
     """Return an albumentations Compose accepting image=<uint8 HxWx3> and
     mask=<uint8 HxW>, producing image=<float32 3xHxW> and mask=<int64 HxW>."""
@@ -22,7 +27,7 @@ def build_transforms(image_size: int = 512, train: bool = True):
         # channel-agnostic, but Normalize expects values in the convention the
         # user supplies. We convert BGR→RGB first so ImageNet stats apply
         # correctly after normalization.
-        A.Lambda(image=lambda x, **kw: x[..., ::-1].copy(), mask=None),
+        A.Lambda(image=_bgr_to_rgb, mask=None),
         A.Resize(image_size, image_size, interpolation=1, mask_interpolation=0),
     ]
     if train:
