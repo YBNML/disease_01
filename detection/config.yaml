@@ -1,0 +1,20 @@
+data:
+  data_yaml: detection/data/data.yaml
+
+model:
+  name: yolov8s.pt       # pretrained on COCO
+  imgsz: 640
+
+train:
+  epochs: 100
+  batch: 16
+  lr0: 0.01
+  workers: 4
+  patience: 30           # early stopping patience
+  device: auto           # auto | mps | cpu | 0 (cuda)
+
+output:
+  project: outputs/detection
+  name: run              # becomes outputs/detection/run/
+
+seed: 42
