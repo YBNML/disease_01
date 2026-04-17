@@ -103,9 +103,33 @@ Outputs land in `outputs/detection/run*/`:
 - `results.csv`, `results.png`
 - `confusion_matrix.png`, P/R curves
 
+## Training & Evaluation (P3 — Segmentation)
+
+3-class semantic segmentation (background / normal fruit / canker fruit).
+Only the 787 polygon-labeled images (train 699 / val 88) are used.
+
+```bash
+# train
+python -m segmentation.train --config segmentation/config.yaml
+
+# quick smoke (3 epochs)
+python -m segmentation.train --config segmentation/config.yaml --override train.epochs=3
+
+# evaluate best checkpoint and save 4 qualitative samples
+python -m segmentation.eval --config segmentation/config.yaml \
+    --ckpt outputs/segmentation/run/<timestamp>/ckpt/best.pt --samples 4
+```
+
+Outputs in `outputs/segmentation/run/<timestamp>/`:
+- `ckpt/best.pt`, `ckpt/last.pt`
+- `train.log`, `tb/` (TensorBoard)
+- `config.yaml` snapshot
+- `metrics.json` (mIoU, per-class IoU, Dice, pixel accuracy, pixel confusion matrix)
+- `qualitative/sample_XXX.png` — original | GT mask | pred mask side-by-side
+
 ## Phase status
 
 - [x] P0 — Common module
 - [x] P1 — Classification
 - [x] P2 — Detection
-- [ ] P3 — Segmentation
+- [x] P3 — Segmentation
