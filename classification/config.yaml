@@ -1,5 +1,5 @@
 data:
-  database_root: ../database
+  database_root: database
   num_workers: 4
   batch_size: 32
   image_size: 224
@@ -21,7 +21,7 @@ eval:
   save_qualitative_every_n_epochs: 5
 
 output:
-  root: ../outputs/classification
+  root: outputs/classification
 
 seed: 42
 device: auto
