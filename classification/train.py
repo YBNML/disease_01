@@ -119,7 +119,11 @@ def main(config_path: str, overrides: list | None = None) -> Path:
         collate_fn=_collate,
     )
 
-    model = build_model(cfg["model"]["num_classes"], cfg["model"]["pretrained"]).to(device)
+    model = build_model(
+        name=cfg["model"].get("name", "resnet50"),
+        num_classes=cfg["model"]["num_classes"],
+        pretrained=cfg["model"]["pretrained"],
+    ).to(device)
     optimizer = _build_optimizer(model, cfg)
     scheduler = _build_scheduler(optimizer, cfg, cfg["train"]["epochs"])
     criterion = nn.CrossEntropyLoss()

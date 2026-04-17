@@ -46,7 +46,11 @@ def main(config_path: str, ckpt_path: str) -> dict:
     device = get_device(cfg["device"])
 
     ckpt = torch.load(ckpt_path, map_location=device, weights_only=False)
-    model = build_model(cfg["model"]["num_classes"], pretrained=False).to(device)
+    model = build_model(
+        name=cfg["model"].get("name", "resnet50"),
+        num_classes=cfg["model"]["num_classes"],
+        pretrained=False,
+    ).to(device)
     model.load_state_dict(ckpt["model"])
     model.eval()
 
