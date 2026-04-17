@@ -79,9 +79,33 @@ Outputs land in `outputs/classification/<timestamp>/`:
 - `config.yaml` — frozen config snapshot
 - `confusion_matrix.png`, `metrics.json` — from `eval.py`
 
+## Training & Evaluation (P2 — Detection)
+
+Use `-m` module form so `common` imports resolve correctly.
+
+```bash
+# one-time: convert AI Hub polygons to YOLO format (~787 images)
+python -m detection.prepare_yolo --source database --dest detection/data
+
+# train
+python -m detection.train --config detection/config.yaml
+
+# quick smoke (5 epochs)
+python -m detection.train --config detection/config.yaml --override train.epochs=5
+
+# evaluate best checkpoint
+python -m detection.eval --config detection/config.yaml \
+    --ckpt outputs/detection/run/weights/best.pt
+```
+
+Outputs land in `outputs/detection/run*/`:
+- `weights/best.pt`, `weights/last.pt`
+- `results.csv`, `results.png`
+- `confusion_matrix.png`, P/R curves
+
 ## Phase status
 
 - [x] P0 — Common module
 - [x] P1 — Classification
-- [ ] P2 — Detection
+- [x] P2 — Detection
 - [ ] P3 — Segmentation
