@@ -53,9 +53,35 @@ Expected output:
 - Spec: `docs/superpowers/specs/2026-04-17-citrus-disease-cv-design.md`
 - Plans: `docs/superpowers/plans/`
 
+## Training & Evaluation (P1)
+
+All commands run from the project root.
+
+```bash
+# train on full data (default: 30 epochs, MPS)
+python classification/train.py --config classification/config.yaml
+
+# quick smoke training (2 epochs)
+python classification/train.py --config classification/config.yaml --override train.epochs=2
+
+# evaluate best checkpoint
+python classification/eval.py --config classification/config.yaml \
+    --ckpt outputs/classification/<run>/ckpt/best.pt
+
+# view training curves
+tensorboard --logdir outputs/classification
+```
+
+Outputs land in `outputs/classification/<timestamp>/`:
+- `ckpt/best.pt`, `ckpt/last.pt` — model checkpoints
+- `train.log` — per-epoch log
+- `tb/` — TensorBoard events
+- `config.yaml` — frozen config snapshot
+- `confusion_matrix.png`, `metrics.json` — from `eval.py`
+
 ## Phase status
 
 - [x] P0 — Common module
-- [ ] P1 — Classification
+- [x] P1 — Classification
 - [ ] P2 — Detection
 - [ ] P3 — Segmentation
