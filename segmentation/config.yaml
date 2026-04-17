@@ -1,0 +1,29 @@
+data:
+  database_root: database
+  num_workers: 4
+  batch_size: 8
+  image_size: 512
+
+model:
+  num_classes: 3                 # bg / normal fruit / canker fruit
+  encoder_name: resnet34
+  encoder_weights: imagenet
+
+train:
+  epochs: 50
+  lr: 0.001
+  weight_decay: 0.0001
+  optimizer: adamw
+  scheduler: cosine
+  ce_weight: 0.5
+  dice_weight: 0.5
+
+eval:
+  save_qualitative_every_n_epochs: 5
+  num_qualitative_samples: 4
+
+output:
+  root: outputs/segmentation
+
+seed: 42
+device: auto
