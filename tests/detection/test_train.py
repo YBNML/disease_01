@@ -23,7 +23,7 @@ def test_train_build_ultralytics_kwargs_from_config(tmp_path):
     assert kwargs["batch"] == 16
     assert kwargs["imgsz"] == 640
     assert kwargs["device"] == "mps"
-    assert kwargs["project"] == "outputs/detection"
+    assert kwargs["project"].endswith("outputs/detection")
     assert kwargs["name"] == "run"
     assert kwargs["seed"] == 42
 

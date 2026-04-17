@@ -6,6 +6,7 @@ Usage:
 """
 from __future__ import annotations
 import argparse
+from pathlib import Path
 
 from common.config import load_config
 from detection.train import _resolve_device
@@ -19,7 +20,7 @@ def build_val_kwargs(cfg: dict) -> dict:
         "batch": cfg["train"]["batch"],
         "workers": cfg["train"]["workers"],
         "device": device,
-        "project": cfg["output"]["project"],
+        "project": str(Path(cfg["output"]["project"]).resolve()),
         "name": cfg["output"]["name"] + "_eval",
         "exist_ok": True,
     }

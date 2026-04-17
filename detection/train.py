@@ -31,7 +31,7 @@ def build_ultralytics_kwargs(cfg: dict) -> dict:
         "workers": cfg["train"]["workers"],
         "patience": cfg["train"]["patience"],
         "device": device,
-        "project": cfg["output"]["project"],
+        "project": str(Path(cfg["output"]["project"]).resolve()),
         "name": cfg["output"]["name"],
         "seed": cfg["seed"],
         "exist_ok": True,  # allow re-runs into same name (ultralytics will increment)

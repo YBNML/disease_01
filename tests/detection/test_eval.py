@@ -15,4 +15,4 @@ def test_eval_build_val_kwargs():
     assert kwargs["data"] == "detection/data/data.yaml"
     assert kwargs["imgsz"] == 640
     assert kwargs["device"] == "mps"
-    assert kwargs["project"] == "outputs/detection"
+    assert kwargs["project"].endswith("outputs/detection")
