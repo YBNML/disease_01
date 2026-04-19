@@ -127,6 +127,23 @@ Outputs in `outputs/segmentation/run/<timestamp>/`:
 - `metrics.json` (mIoU, per-class IoU, Dice, pixel accuracy, pixel confusion matrix)
 - `qualitative/sample_XXX.png` — original | GT mask | pred mask side-by-side
 
+## Backbone Comparison (P1b — Classification)
+
+Compare 5 backbones (ResNet50 / EfficientNet-B0 / ConvNeXt-Tiny /
+MobileNetV3-Large / ViT-Small/16) under identical conditions — same data,
+same optimizer, same 5-epoch budget — and report accuracy vs inference speed vs
+parameter count.
+
+```bash
+python -m classification.compare --config classification/compare_config.yaml
+```
+
+Outputs in `outputs/classification_compare/compare/<timestamp>/`:
+- `<model_name>/run/<sub-timestamp>/` — per-model training + eval artifacts
+- `comparison.csv`, `comparison.md`, `comparison.json` — aggregated report
+
+Latest results: [`docs/results/2026-04-19-classification-comparison.md`](docs/results/2026-04-19-classification-comparison.md)
+
 ## Phase status
 
 - [x] P0 — Common module
