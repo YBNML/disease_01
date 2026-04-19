@@ -1,0 +1,57 @@
+[
+  {
+    "model": "resnet50",
+    "params": 23512130,
+    "accuracy": 0.9882903981264637,
+    "f1_positive": 0.9855907780979827,
+    "precision_positive": 0.9771428571428571,
+    "recall_positive": 0.9941860465116279,
+    "auc": 0.9974692202462381,
+    "latency_bs1_ms": 27.862912500010378,
+    "throughput_bs_fps": 83.80462431516987
+  },
+  {
+    "model": "efficientnet_b0",
+    "params": 4010110,
+    "accuracy": 0.9742388758782201,
+    "f1_positive": 0.967930029154519,
+    "precision_positive": 0.9707602339181286,
+    "recall_positive": 0.9651162790697675,
+    "auc": 0.9901960784313725,
+    "latency_bs1_ms": 19.677523599966662,
+    "throughput_bs_fps": 160.62534907191383
+  },
+  {
+    "model": "convnext_tiny",
+    "params": 27821666,
+    "accuracy": 0.9882903981264637,
+    "f1_positive": 0.9856733524355301,
+    "precision_positive": 0.9717514124293786,
+    "recall_positive": 1.0,
+    "auc": 0.9993844049247605,
+    "latency_bs1_ms": 7.176048600013019,
+    "throughput_bs_fps": 109.81488870260742
+  },
+  {
+    "model": "mobilenetv3_large_100",
+    "params": 4204594,
+    "accuracy": 0.9765807962529274,
+    "f1_positive": 0.9707602339181286,
+    "precision_positive": 0.9764705882352941,
+    "recall_positive": 0.9651162790697675,
+    "auc": 0.9954172366621067,
+    "latency_bs1_ms": 13.124038866650759,
+    "throughput_bs_fps": 264.5672094500461
+  },
+  {
+    "model": "vit_small_patch16_224",
+    "params": 21666434,
+    "accuracy": 0.990632318501171,
+    "f1_positive": 0.9883720930232558,
+    "precision_positive": 0.9883720930232558,
+    "recall_positive": 0.9883720930232558,
+    "auc": 0.9989740082079344,
+    "latency_bs1_ms": 5.936477766711809,
+    "throughput_bs_fps": 175.0310583269131
+  }
+]
