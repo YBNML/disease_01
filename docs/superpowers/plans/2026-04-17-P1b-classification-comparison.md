@@ -398,7 +398,7 @@ models:
 - [ ] **Step 2: Verify YAML loads**
 
 ```bash
-source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && cd <project root> && python -c "from common.config import load_config; c = load_config('classification/compare_config.yaml'); print(len(c['models']), 'models')"
+source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && python -c "from common.config import load_config; c = load_config('classification/compare_config.yaml'); print(len(c['models']), 'models')"
 ```
 
 Expected: `5 models`.
@@ -710,7 +710,7 @@ EOF
 - [ ] **Step 1: Launch the comparison**
 
 ```bash
-source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && cd <project root> && python -m classification.compare --config classification/compare_config.yaml
+source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && python -m classification.compare --config classification/compare_config.yaml
 ```
 
 This will:
@@ -804,7 +804,7 @@ Latest results: [`docs/results/2026-04-17-classification-comparison.md`](docs/re
 - [ ] **Step 2: Run full test suite**
 
 ```bash
-source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && cd <project root> && pytest
+source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && pytest
 ```
 
 Expected: all tests still pass. P1b adds: 5 (model parametrized) + 4 (benchmark) + 2 (compare) = 11 new tests, minus any existing model tests replaced. Exact total depends on parametrize counts — should be ~85-86 tests.

@@ -436,7 +436,7 @@ EOF
 - [ ] **Step 1: Generate YOLO dataset from real data**
 
 ```bash
-source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && cd <project root> && python detection/prepare_yolo.py --source database --dest detection/data
+source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && python detection/prepare_yolo.py --source database --dest detection/data
 ```
 
 Expected stdout: `train: 699  val: 88`.
@@ -500,7 +500,7 @@ seed: 42
 - [ ] **Step 2: Verify YAML loads**
 
 ```bash
-source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && cd <project root> && python -c "from common.config import load_config; c = load_config('detection/config.yaml'); print(c)"
+source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && python -c "from common.config import load_config; c = load_config('detection/config.yaml'); print(c)"
 ```
 
 Expected: prints the nested dict without errors.
@@ -793,7 +793,7 @@ EOF
 First-run caveat: ultralytics will download `yolov8s.pt` (~20 MB) on first use. Allow ~30s for this.
 
 ```bash
-source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && cd <project root> && python detection/train.py --config detection/config.yaml --override train.epochs=5
+source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && python detection/train.py --config detection/config.yaml --override train.epochs=5
 ```
 
 Expected behavior:
@@ -817,7 +817,7 @@ Ultralytics writes checkpoints to `outputs/detection/run/weights/best.pt` (or th
 ```bash
 BEST=$(ls -td outputs/detection/run*/weights/best.pt 2>/dev/null | head -1)
 echo "best: $BEST"
-source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && cd <project root> && python detection/eval.py --config detection/config.yaml --ckpt "$BEST"
+source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && python detection/eval.py --config detection/config.yaml --ckpt "$BEST"
 ```
 
 Expected: ultralytics prints mAP@0.5, mAP@0.5:0.95, per-class AP. Creates `outputs/detection/run_eval/` with metrics artifacts.
@@ -873,7 +873,7 @@ Outputs are written by ultralytics to `outputs/detection/run*/`:
 - [ ] **Step 2: Run full test suite**
 
 ```bash
-source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && cd <project root> && pytest
+source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && pytest
 ```
 
 Expected: all P0+P1+P2 tests pass. P2 adds 4 + 4 + 3 + 2 = 13 tests → total ~56.

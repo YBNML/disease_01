@@ -680,7 +680,7 @@ device: auto
 - [ ] **Step 2: Verify YAML loads**
 
 ```bash
-source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && cd <project root> && python -c "from common.config import load_config; c = load_config('segmentation/config.yaml'); print(c)"
+source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && python -c "from common.config import load_config; c = load_config('segmentation/config.yaml'); print(c)"
 ```
 
 - [ ] **Step 3: Commit**
@@ -1212,7 +1212,7 @@ EOF
 - [ ] **Step 1: Run 3-epoch training on real data**
 
 ```bash
-source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && cd <project root> && python -m segmentation.train --config segmentation/config.yaml --override train.epochs=3
+source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && python -m segmentation.train --config segmentation/config.yaml --override train.epochs=3
 ```
 
 Expected behavior:
@@ -1233,7 +1233,7 @@ If wall time exceeds 30 min on MPS or 60 min on CPU, STOP and report.
 ```bash
 BEST=$(ls -td outputs/segmentation/run/*/ 2>/dev/null | head -1)ckpt/best.pt
 echo "best: $BEST"
-source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && cd <project root> && python -m segmentation.eval --config segmentation/config.yaml --ckpt "$BEST" --samples 4
+source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && python -m segmentation.eval --config segmentation/config.yaml --ckpt "$BEST" --samples 4
 ```
 
 Expected:
@@ -1293,7 +1293,7 @@ Outputs in `outputs/segmentation/run/<timestamp>/`:
 - [ ] **Step 2: Run full test suite**
 
 ```bash
-source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && cd <project root> && pytest
+source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh && conda activate disease_01 && export KMP_DUPLICATE_LIB_OK=TRUE && pytest
 ```
 
 Expected: P0 (24) + P1 (19) + P2 (13) + P3 (~21) ≈ 77 tests.
