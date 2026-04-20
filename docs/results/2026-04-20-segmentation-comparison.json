@@ -1,0 +1,62 @@
+[
+  {
+    "label": "unet_resnet34",
+    "architecture": "Unet",
+    "encoder": "resnet34",
+    "params": 24436659,
+    "miou": 0.9615905759508462,
+    "pixel_accuracy": 0.9948298714377664,
+    "iou_bg": 0.9977622063444709,
+    "iou_normal": 0.9579376960664755,
+    "iou_canker": 0.9290718254415921,
+    "dice_normal": 0.9785170365645299,
+    "dice_canker": 0.9632319680257777,
+    "latency_bs1_ms": 26.226754150002307,
+    "throughput_bs_fps": 40.536087651312684
+  },
+  {
+    "label": "unet_efficientnet-b0",
+    "architecture": "Unet",
+    "encoder": "efficientnet-b0",
+    "params": 6251759,
+    "miou": 0.9077047098049889,
+    "pixel_accuracy": 0.9888530644503507,
+    "iou_bg": 0.9976268655720163,
+    "iou_normal": 0.9083313360599337,
+    "iou_canker": 0.8171559277830165,
+    "dice_normal": 0.9519639686212293,
+    "dice_canker": 0.899378985907908,
+    "latency_bs1_ms": 24.630679200004124,
+    "throughput_bs_fps": 43.25961126543765
+  },
+  {
+    "label": "deeplabv3plus_resnet34",
+    "architecture": "DeepLabV3Plus",
+    "encoder": "resnet34",
+    "params": 22437971,
+    "miou": 0.9776705128679039,
+    "pixel_accuracy": 0.9966026219454679,
+    "iou_bg": 0.9977330221734759,
+    "iou_normal": 0.9731974891177363,
+    "iou_canker": 0.9620810273124992,
+    "dice_normal": 0.9864167114391333,
+    "dice_canker": 0.9806741046064549,
+    "latency_bs1_ms": 30.89209584998116,
+    "throughput_bs_fps": 36.12655006574084
+  },
+  {
+    "label": "fpn_resnet34",
+    "architecture": "FPN",
+    "encoder": "resnet34",
+    "params": 23155651,
+    "miou": 0.9676728999494345,
+    "pixel_accuracy": 0.9955360239202325,
+    "iou_bg": 0.9976554692747077,
+    "iou_normal": 0.9654029563176731,
+    "iou_canker": 0.9399602742559228,
+    "dice_normal": 0.9823969717908907,
+    "dice_canker": 0.9690510540134099,
+    "latency_bs1_ms": 24.945354200008296,
+    "throughput_bs_fps": 41.634486678005906
+  }
+]
