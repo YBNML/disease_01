@@ -1,0 +1,30 @@
+common:
+  data:
+    data_yaml: detection/data/data.yaml
+  model:
+    imgsz: 640
+  train:
+    epochs: 5
+    batch: 16
+    lr0: 0.01
+    workers: 4
+    patience: 30
+    device: auto
+  output:
+    project: outputs/detection_compare
+    name: run
+  seed: 42
+
+benchmark:
+  warmup: 5
+  iters: 30
+  imgsz: 640
+  batch_sizes: [1, 16]
+
+models:
+  - name: yolov8n.pt
+    label: yolov8n
+  - name: yolov8s.pt
+    label: yolov8s
+  - name: yolov8m.pt
+    label: yolov8m
