@@ -128,7 +128,7 @@ def main(config_path: str,
         num_classes=cfg["teacher"]["num_classes"],
         pretrained=False,
     ).to(device)
-    state = torch.load(teacher_ckpt_path, map_location=device)
+    state = torch.load(teacher_ckpt_path, map_location=device, weights_only=False)
     key = "model" if "model" in state else "state_dict" if "state_dict" in state else None
     sd = state[key] if key else state
     teacher.load_state_dict(sd)

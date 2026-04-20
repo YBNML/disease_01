@@ -53,7 +53,7 @@ def _resolve_ckpt(pattern: str) -> Path:
 
 def _load_model(ckpt_path: Path, device: torch.device) -> nn.Module:
     model = build_model(name="vit_small_patch16_224", num_classes=2, pretrained=False)
-    state = torch.load(ckpt_path, map_location=device)
+    state = torch.load(ckpt_path, map_location=device, weights_only=False)
     key = "model" if "model" in state else "state_dict" if "state_dict" in state else None
     sd = state[key] if key else state
     model.load_state_dict(sd)
