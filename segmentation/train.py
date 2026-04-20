@@ -78,6 +78,7 @@ def main(config_path: str, overrides: list | None = None) -> Path:
 
     model = build_model(
         num_classes=cfg["model"]["num_classes"],
+        architecture=cfg["model"].get("architecture", "Unet"),
         encoder_name=cfg["model"]["encoder_name"],
         encoder_weights=cfg["model"]["encoder_weights"],
     ).to(device)

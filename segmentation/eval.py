@@ -76,6 +76,7 @@ def main(config_path: str, ckpt_path: str,
     ckpt = torch.load(ckpt_path, map_location=device, weights_only=False)
     model = build_model(
         num_classes=cfg["model"]["num_classes"],
+        architecture=cfg["model"].get("architecture", "Unet"),
         encoder_name=cfg["model"]["encoder_name"],
         encoder_weights=None,
     ).to(device)

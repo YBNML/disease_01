@@ -1,0 +1,41 @@
+common:
+  data:
+    database_root: database
+    num_workers: 4
+    batch_size: 8
+    image_size: 512
+  train:
+    epochs: 3                  # short budget
+    lr: 0.001
+    weight_decay: 0.0001
+    optimizer: adamw
+    scheduler: cosine
+    ce_weight: 0.5
+    dice_weight: 0.5
+  eval:
+    save_qualitative_every_n_epochs: 100
+    num_qualitative_samples: 0
+  output:
+    root: outputs/segmentation_compare
+  seed: 42
+  device: auto
+
+benchmark:
+  warmup: 5
+  iters: 20
+  imgsz: 512
+  batch_sizes: [1, 8]
+
+models:
+  - label: unet_resnet34                  # baseline
+    architecture: Unet
+    encoder_name: resnet34
+  - label: unet_efficientnet-b0
+    architecture: Unet
+    encoder_name: efficientnet-b0
+  - label: deeplabv3plus_resnet34
+    architecture: DeepLabV3Plus
+    encoder_name: resnet34
+  - label: fpn_resnet34
+    architecture: FPN
+    encoder_name: resnet34
