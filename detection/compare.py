@@ -50,16 +50,18 @@ def _sync(device: str) -> None:
 
 
 def _benchmark(model, imgsz: int, device: str, warmup: int, iters: int, bs: int) -> float:
-    """Return seconds per forward pass at given batch size."""
-    x = np.zeros((bs, imgsz, imgsz, 3), dtype=np.uint8)
-    # ultralytics YOLO model.predict(...) is the inference path
-    for _ in range(warmup):
-        model.predict(x, device=device, verbose=False)
-    _sync(device)
-    t0 = time.perf_counter()
-    for _ in range(iters):
-        model.predict(x, device=device, verbose=False)
-    _sync(device)
+    """Return seconds per forward at given batch size (raw net, no letterbox)."""
+    import torch
+    net = model.model.to(device).eval()
+    x = torch.randn(bs, 3, imgsz, imgsz, device=device)
+    with torch.no_grad():
+        for _ in range(warmup):
+            net(x)
+        _sync(device)
+        t0 = time.perf_counter()
+        for _ in range(iters):
+            net(x)
+        _sync(device)
     return (time.perf_counter() - t0) / iters
 
 
