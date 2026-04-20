@@ -1,0 +1,36 @@
+data:
+  database_root: database
+  num_workers: 4
+  batch_size: 32
+  image_size: 224
+
+teacher:
+  name: vit_small_patch16_224
+  num_classes: 2
+  # ckpt passed via --teacher-ckpt CLI
+
+student:
+  name: mobilenetv3_large_100
+  num_classes: 2
+  pretrained: true
+
+distill:
+  alpha: 0.5          # weight on hard CE loss
+  temperature: 4.0    # soft-label temperature
+
+train:
+  epochs: 5
+  lr: 0.0001
+  weight_decay: 0.0001
+  optimizer: adamw
+  scheduler: cosine
+  use_weighted_sampler: true
+
+eval:
+  save_misclassified: false
+
+output:
+  root: outputs/distillation
+
+seed: 42
+device: auto
