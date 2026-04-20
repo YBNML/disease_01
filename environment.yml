@@ -24,3 +24,7 @@ dependencies:
       - ultralytics
       - segmentation-models-pytorch
       - timm
+      - jupyter
+      - ipykernel
+      - jupytext
+      - nbformat
