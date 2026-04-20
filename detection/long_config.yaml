@@ -1,0 +1,20 @@
+data:
+  data_yaml: detection/data/data.yaml
+
+model:
+  name: yolov8m.pt        # medium variant for long-training study
+  imgsz: 640
+
+train:
+  epochs: 30
+  batch: 16
+  lr0: 0.01
+  workers: 4
+  patience: 30
+  device: auto
+
+output:
+  project: outputs/detection_long
+  name: yolov8m_30ep
+
+seed: 42
