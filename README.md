@@ -164,6 +164,21 @@ python -m classification.compare --config classification/compare_config.yaml
 | MobileNetV3-L | 4.2M | 97.66% | 0.971 | 13.12 | **264.6** |
 | EfficientNet-B0 | **4.0M** | 97.42% | 0.968 | 19.68 | 160.6 |
 
+## 분석 노트 (self-study + portfolio)
+
+각 단계의 결과를 시각화·해석한 Jupyter Notebook 모음. GitHub에서 바로 렌더링되며, 로컬에서는 conda env 활성화 후 재실행 가능.
+
+| # | 노트북 | 내용 |
+|---|---|---|
+| 01 | [`docs/analysis/01_dataset_analysis.ipynb`](docs/analysis/01_dataset_analysis.ipynb) | AI Hub 감귤 데이터셋 EDA — 클래스 분포, polygon 커버리지, 메타데이터(카메라/지역/기상) |
+| 02 | [`docs/analysis/02_classification_results.ipynb`](docs/analysis/02_classification_results.ipynb) | P1 결과 심층 분석 — 학습 곡선, CM 해석, 오분류 샘플, ROC |
+| 03 | [`docs/analysis/03_detection_results.ipynb`](docs/analysis/03_detection_results.ipynb) | P2 결과 — bbox 시각화, per-class AP, 실패 케이스 |
+| 04 | [`docs/analysis/04_segmentation_results.ipynb`](docs/analysis/04_segmentation_results.ipynb) | P3 결과 — mask 시각화, per-class IoU/Dice, 실패 케이스 |
+| 05 | [`docs/analysis/05_backbone_comparison.ipynb`](docs/analysis/05_backbone_comparison.ipynb) | P1b 백본 비교 심층 분석 — Pareto frontier, 배포 시나리오별 권장 (**실행 완료, GitHub에서 바로 확인 가능**) |
+| 06 | [`docs/analysis/06_lessons_learned.md`](docs/analysis/06_lessons_learned.md) | 설계 결정 근거, 트러블슈팅 기록, 다음 단계 정리 |
+
+각 노트북 하단에 **"📝 Your turn"** 섹션으로 직접 분석 노트를 적을 수 있게 구성되어 있습니다.
+
 ## 설계 및 계획 문서
 
 - 전체 설계: [`docs/superpowers/specs/2026-04-17-citrus-disease-cv-design.md`](docs/superpowers/specs/2026-04-17-citrus-disease-cv-design.md)
