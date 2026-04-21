@@ -1,0 +1,23 @@
+{
+  "checkpoint": "outputs/classification_compare/compare/2026-04-19_01-13-33/vit_small_patch16_224/run/2026-04-19_02-09-35/ckpt/best.pt",
+  "val_samples": 427,
+  "fp32": {
+    "size_mb": 82.706,
+    "accuracy": 0.990632,
+    "f1_canker": 0.988372,
+    "latency_bs1_ms": 18.529,
+    "throughput_bs32_fps": 88.86
+  },
+  "int8_dynamic": {
+    "size_mb": 21.986,
+    "accuracy": 0.990632,
+    "f1_canker": 0.988372,
+    "latency_bs1_ms": 32.189,
+    "throughput_bs32_fps": 38.52
+  },
+  "delta": {
+    "size_reduction_pct": 73.42,
+    "latency_speedup": 0.576,
+    "accuracy_drop_pp": 0.0
+  }
+}

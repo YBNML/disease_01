@@ -1,0 +1,29 @@
+2026-04-21 01:12:14,061 INFO config: {'data': {'database_root': 'database', 'num_workers': 4, 'batch_size': 8, 'image_size': 512}, 'model': {'num_classes': 3, 'architecture': 'DeepLabV3Plus', 'encoder_name': 'resnet34', 'encoder_weights': 'imagenet'}, 'train': {'epochs': 20, 'lr': 0.001, 'weight_decay': 0.0001, 'optimizer': 'adamw', 'scheduler': 'cosine', 'ce_weight': 0.5, 'dice_weight': 0.5}, 'eval': {'save_qualitative_every_n_epochs': 5, 'num_qualitative_samples': 4}, 'output': {'root': 'outputs/segmentation_long'}, 'seed': 42, 'device': 'auto'}
+2026-04-21 01:12:14,061 INFO device: mps
+2026-04-21 01:12:14,061 INFO out_dir: outputs/segmentation_long/run/2026-04-21_01-12-14
+2026-04-21 01:14:12,871 INFO epoch 1/20 train_loss=0.1729 val_loss=0.0360 miou=0.9045 pixAcc=0.9882 iou_classes=['0.997', '0.902', '0.814']
+2026-04-21 01:14:13,302 INFO   new best miou=0.9045
+2026-04-21 01:16:07,856 INFO epoch 2/20 train_loss=0.0922 val_loss=0.0462 miou=0.8555 pixAcc=0.9829 iou_classes=['0.998', '0.861', '0.707']
+2026-04-21 01:18:02,916 INFO epoch 3/20 train_loss=0.0999 val_loss=0.2003 miou=0.5480 pixAcc=0.9439 iou_classes=['0.997', '0.647', '0.000']
+2026-04-21 01:19:58,454 INFO epoch 4/20 train_loss=0.0790 val_loss=0.0202 miou=0.9416 pixAcc=0.9926 iou_classes=['0.998', '0.938', '0.889']
+2026-04-21 01:19:58,835 INFO   new best miou=0.9416
+2026-04-21 01:21:53,438 INFO epoch 5/20 train_loss=0.0820 val_loss=0.0195 miou=0.9546 pixAcc=0.9941 iou_classes=['0.998', '0.950', '0.916']
+2026-04-21 01:21:53,806 INFO   new best miou=0.9546
+2026-04-21 01:23:48,772 INFO epoch 6/20 train_loss=0.0710 val_loss=0.0180 miou=0.9694 pixAcc=0.9958 iou_classes=['0.998', '0.966', '0.944']
+2026-04-21 01:23:49,156 INFO   new best miou=0.9694
+2026-04-21 01:25:44,103 INFO epoch 7/20 train_loss=0.0673 val_loss=0.0292 miou=0.9298 pixAcc=0.9909 iou_classes=['0.997', '0.924', '0.869']
+2026-04-21 01:27:39,400 INFO epoch 8/20 train_loss=0.0779 val_loss=0.2610 miou=0.6704 pixAcc=0.8603 iou_classes=['0.836', '0.875', '0.299']
+2026-04-21 01:29:35,060 INFO epoch 9/20 train_loss=0.0659 val_loss=0.0109 miou=0.9836 pixAcc=0.9975 iou_classes=['0.998', '0.981', '0.972']
+2026-04-21 01:29:35,435 INFO   new best miou=0.9836
+2026-04-21 01:31:30,860 INFO epoch 10/20 train_loss=0.0486 val_loss=0.0235 miou=0.9445 pixAcc=0.9931 iou_classes=['0.998', '0.942', '0.894']
+2026-04-21 01:33:26,362 INFO epoch 11/20 train_loss=0.0559 val_loss=0.0135 miou=0.9692 pixAcc=0.9958 iou_classes=['0.998', '0.965', '0.944']
+2026-04-21 01:35:21,980 INFO epoch 12/20 train_loss=0.0492 val_loss=0.0098 miou=0.9810 pixAcc=0.9972 iou_classes=['0.998', '0.978', '0.967']
+2026-04-21 01:37:17,743 INFO epoch 13/20 train_loss=0.0479 val_loss=0.0143 miou=0.9689 pixAcc=0.9959 iou_classes=['0.998', '0.965', '0.943']
+2026-04-21 01:39:13,246 INFO epoch 14/20 train_loss=0.0500 val_loss=0.0133 miou=0.9705 pixAcc=0.9961 iou_classes=['0.998', '0.967', '0.946']
+2026-04-21 01:41:08,884 INFO epoch 15/20 train_loss=0.0375 val_loss=0.0102 miou=0.9744 pixAcc=0.9965 iou_classes=['0.998', '0.971', '0.954']
+2026-04-21 01:43:04,832 INFO epoch 16/20 train_loss=0.0413 val_loss=0.0110 miou=0.9691 pixAcc=0.9958 iou_classes=['0.998', '0.965', '0.944']
+2026-04-21 01:45:00,684 INFO epoch 17/20 train_loss=0.0374 val_loss=0.0132 miou=0.9699 pixAcc=0.9959 iou_classes=['0.998', '0.966', '0.946']
+2026-04-21 01:46:56,166 INFO epoch 18/20 train_loss=0.0391 val_loss=0.0150 miou=0.9679 pixAcc=0.9957 iou_classes=['0.998', '0.964', '0.941']
+2026-04-21 01:48:51,082 INFO epoch 19/20 train_loss=0.0349 val_loss=0.0138 miou=0.9701 pixAcc=0.9960 iou_classes=['0.998', '0.966', '0.946']
+2026-04-21 01:50:46,750 INFO epoch 20/20 train_loss=0.0335 val_loss=0.0135 miou=0.9702 pixAcc=0.9960 iou_classes=['0.998', '0.966', '0.946']
+2026-04-21 01:50:47,013 INFO training complete

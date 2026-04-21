@@ -1,0 +1,18 @@
+2026-04-21 08:24:26,695 INFO config: {'data': {'database_root': 'database', 'num_workers': 4, 'batch_size': 32, 'image_size': 224}, 'teacher': {'name': 'vit_small_patch16_224', 'num_classes': 2}, 'student': {'name': 'mobilenetv3_large_100', 'num_classes': 2, 'pretrained': True}, 'distill': {'alpha': 0.5, 'temperature': 4.0}, 'train': {'epochs': 5, 'lr': 0.0001, 'weight_decay': 0.0001, 'optimizer': 'adamw', 'scheduler': 'cosine', 'use_weighted_sampler': True}, 'eval': {'save_misclassified': False}, 'output': {'root': 'outputs/distillation'}, 'seed': 42, 'device': 'auto'}
+2026-04-21 08:24:26,695 INFO device: mps
+2026-04-21 08:24:26,695 INFO out_dir: outputs/distillation/run/2026-04-21_08-24-26
+2026-04-21 08:24:26,695 INFO loading teacher from: outputs/classification_compare/compare/2026-04-19_01-13-33/vit_small_patch16_224/run/2026-04-19_02-09-35/ckpt/best.pt
+2026-04-21 08:24:27,155 INFO teacher frozen in eval mode
+2026-04-21 08:24:27,155 INFO building student: mobilenetv3_large_100
+2026-04-21 08:24:30,951 INFO train=3407  val=427
+2026-04-21 08:26:08,474 INFO epoch 1/5 train_loss=1.3087 val_loss=0.7895 val_acc=0.9368 val_f1_pos=0.9194 val_auc=0.9812
+2026-04-21 08:26:08,647 INFO   new best f1_positive=0.9194
+2026-04-21 08:27:45,182 INFO epoch 2/5 train_loss=0.5305 val_loss=0.5816 val_acc=0.9625 val_f1_pos=0.9521 val_auc=0.9884
+2026-04-21 08:27:45,351 INFO   new best f1_positive=0.9521
+2026-04-21 08:29:21,368 INFO epoch 3/5 train_loss=0.3534 val_loss=0.5007 val_acc=0.9672 val_f1_pos=0.9586 val_auc=0.9921
+2026-04-21 08:29:21,532 INFO   new best f1_positive=0.9586
+2026-04-21 08:30:57,649 INFO epoch 4/5 train_loss=0.2720 val_loss=0.4101 val_acc=0.9672 val_f1_pos=0.9588 val_auc=0.9933
+2026-04-21 08:30:57,850 INFO   new best f1_positive=0.9588
+2026-04-21 08:32:34,346 INFO epoch 5/5 train_loss=0.2523 val_loss=0.3867 val_acc=0.9696 val_f1_pos=0.9619 val_auc=0.9943
+2026-04-21 08:32:34,529 INFO   new best f1_positive=0.9619
+2026-04-21 08:32:34,529 INFO distillation training complete

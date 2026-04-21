@@ -1,0 +1,5 @@
+2026-04-21 08:26:08,474 INFO epoch 1/5 train_loss=1.3087 val_loss=0.7895 val_acc=0.9368 val_f1_pos=0.9194 val_auc=0.9812
+2026-04-21 08:27:45,182 INFO epoch 2/5 train_loss=0.5305 val_loss=0.5816 val_acc=0.9625 val_f1_pos=0.9521 val_auc=0.9884
+2026-04-21 08:29:21,368 INFO epoch 3/5 train_loss=0.3534 val_loss=0.5007 val_acc=0.9672 val_f1_pos=0.9586 val_auc=0.9921
+2026-04-21 08:30:57,649 INFO epoch 4/5 train_loss=0.2720 val_loss=0.4101 val_acc=0.9672 val_f1_pos=0.9588 val_auc=0.9933
+2026-04-21 08:32:34,346 INFO epoch 5/5 train_loss=0.2523 val_loss=0.3867 val_acc=0.9696 val_f1_pos=0.9619 val_auc=0.9943
