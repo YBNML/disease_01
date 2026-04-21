@@ -15,6 +15,7 @@ from pptx.dml.color import RGBColor
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 OUT_PATH = PROJECT_ROOT / "docs" / "disease_01_presentation.pptx"
+ASSETS = PROJECT_ROOT / "docs" / "ppt_assets"
 
 # Colors
 COLOR_PRIMARY = RGBColor(0x16, 0x5B, 0x33)   # dark green (citrus leaf)
@@ -141,6 +142,83 @@ def add_content_slide(prs, title: str, bullets: list, notes: str = ""):
         color = COLOR_TEXT if level == 0 else COLOR_MUTED
         _set_font(r, size, bold=bold, color=color)
         p.space_after = Pt(6)
+
+    if notes:
+        slide.notes_slide.notes_text_frame.text = notes
+    return slide
+
+
+def _add_title_stripe(slide, prs, title: str):
+    tx = slide.shapes.add_textbox(Inches(0.5), Inches(0.3), prs.slide_width - Inches(1.0), Inches(0.9))
+    tf = tx.text_frame
+    tf.word_wrap = True
+    p = tf.paragraphs[0]
+    r = p.add_run(); r.text = title
+    _set_font(r, 26, bold=True, color=COLOR_PRIMARY)
+    from pptx.enum.shapes import MSO_SHAPE
+    stripe = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.5), Inches(1.1), Inches(1.5), Emu(38100))
+    stripe.fill.solid()
+    stripe.fill.fore_color.rgb = COLOR_ACCENT
+    stripe.line.fill.background()
+
+
+def _caption(slide, x, y, w, text, size=12, italic=True, align=PP_ALIGN.CENTER):
+    tx = slide.shapes.add_textbox(x, y, w, Inches(0.3))
+    tf = tx.text_frame
+    tf.word_wrap = True
+    p = tf.paragraphs[0]; p.alignment = align
+    r = p.add_run(); r.text = text
+    _set_font(r, size, color=COLOR_MUTED)
+    r.font.italic = italic
+
+
+def add_single_image_slide(prs, title: str, image_path, caption: str = "", notes: str = ""):
+    """One large centered image."""
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    _add_title_stripe(slide, prs, title)
+
+    # Max box
+    max_w = prs.slide_width - Inches(1.0)
+    max_h = prs.slide_height - Inches(2.0)
+    pic = slide.shapes.add_picture(str(image_path), Inches(0.5), Inches(1.4), width=max_w)
+    # If image too tall, scale down
+    if pic.height > max_h:
+        ratio = max_h / pic.height
+        pic.width = int(pic.width * ratio)
+        pic.height = int(pic.height * ratio)
+    # Center horizontally
+    pic.left = int((prs.slide_width - pic.width) / 2)
+
+    if caption:
+        _caption(slide, Inches(0.5), pic.top + pic.height + Inches(0.1),
+                 prs.slide_width - Inches(1.0), caption)
+    if notes:
+        slide.notes_slide.notes_text_frame.text = notes
+    return slide
+
+
+def add_two_image_slide(prs, title: str, left_path, right_path,
+                        left_caption: str = "", right_caption: str = "",
+                        notes: str = ""):
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    _add_title_stripe(slide, prs, title)
+
+    gap = Inches(0.3)
+    col_w = (prs.slide_width - Inches(1.0) - gap) / 2
+    max_h = prs.slide_height - Inches(2.2)
+    top = Inches(1.4)
+
+    for i, (path, cap) in enumerate([(left_path, left_caption), (right_path, right_caption)]):
+        left = Inches(0.5) + i * (col_w + gap)
+        pic = slide.shapes.add_picture(str(path), left, top, width=int(col_w))
+        if pic.height > max_h:
+            ratio = max_h / pic.height
+            pic.width = int(pic.width * ratio)
+            pic.height = int(pic.height * ratio)
+            # Recenter horizontally inside the column
+            pic.left = int(left + (col_w - pic.width) / 2)
+        if cap:
+            _caption(slide, left, top + pic.height + Inches(0.1), int(col_w), cap, size=11)
 
     if notes:
         slide.notes_slide.notes_text_frame.text = notes
@@ -287,6 +365,13 @@ def build_presentation():
     # --- 5. 기본 3태스크 ---
     add_section_header(prs, "3. 3가지 CV 태스크 구현", "P1 Classification / P2 Detection / P3 Segmentation")
 
+    add_single_image_slide(
+        prs, "결과 이미지 — ViT-Small Confusion Matrix",
+        ASSETS / "cls_vit_cm.png",
+        caption="ViT-Small/16 on val set (427) — 오분류 4장 (FN 1, FP 3)",
+        notes="P1b에서 최고 성능을 보인 ViT-Small의 confusion matrix. 궤양병 recall 거의 완벽.",
+    )
+
     add_content_slide(prs, "P1 — Classification (ResNet50)",
         [
             ("모델 & 학습 설정", 0, True),
@@ -300,6 +385,15 @@ def build_presentation():
             ("FP 5장 / FN 0장 — 의료적 스크리닝에 이상적", 1),
         ])
 
+    add_two_image_slide(
+        prs, "결과 이미지 — YOLOv8m 30ep 학습 곡선 & Confusion Matrix",
+        ASSETS / "det_yolov8m_training.png",
+        ASSETS / "det_yolov8m_cm.png",
+        left_caption="Training curves (loss & mAP over 30 epochs)",
+        right_caption="Confusion matrix (val 88 images)",
+        notes="P4-A1 장기학습 결과: under-fit이었던 yolov8m이 30ep에 mAP@0.5 0.9945 달성.",
+    )
+
     add_content_slide(prs, "P2 — Detection (YOLOv8s)",
         [
             ("모델 & 학습 설정", 0, True),
@@ -312,6 +406,15 @@ def build_presentation():
             ("Normal AP 0.994 / Canker AP 0.995", 1),
             ("배경 흰색 + 단일 객체 → 난이도 본질적으로 낮음", 1),
         ])
+
+    add_two_image_slide(
+        prs, "결과 이미지 — Segmentation 정성 샘플 (DeepLabV3+ 20ep)",
+        ASSETS / "seg_sample_000.png",
+        ASSETS / "seg_sample_001.png",
+        left_caption="샘플 #1 (원본 | GT mask | 예측 mask)",
+        right_caption="샘플 #2 (원본 | GT mask | 예측 mask)",
+        notes="P4-A2 결과. 초록=정상, 빨강=궤양병. GT와 예측이 거의 겹침.",
+    )
 
     add_content_slide(prs, "P3 — Segmentation (smp U-Net + ResNet34)",
         [
@@ -328,6 +431,13 @@ def build_presentation():
 
     # --- 6. 비교 실험 3종 ---
     add_section_header(prs, "4. 비교 실험 3종", "백본 · YOLO variants · Seg 아키텍처")
+
+    add_single_image_slide(
+        prs, "결과 이미지 — P1b 백본 비교 시각화",
+        ASSETS / "nb05_fig_02.png",
+        caption="scatter: params vs accuracy / latency vs F1 / throughput vs accuracy",
+        notes="노트북 05에서 실행한 3-panel scatter. ViT-Small이 Pareto-optimal.",
+    )
 
     add_table_slide(prs, "P1b — Classification 백본 비교 (5 models, 5 epochs)",
         ["Model", "Params", "Accuracy", "F1 (canker)", "Latency bs=1 (ms)", "FPS"],
@@ -414,6 +524,20 @@ def build_presentation():
 
     # --- 8. 분석 노트북 & 인사이트 ---
     add_section_header(prs, "6. 분석 & 인사이트", "Grad-CAM / FP 분석 / 핵심 발견")
+
+    add_single_image_slide(
+        prs, "결과 이미지 — Grad-CAM (정상 샘플)",
+        ASSETS / "nb07_gradcam_01.png",
+        caption="4장의 정상 감귤 샘플에 Grad-CAM overlay — 모델이 어디를 보는가",
+        notes="ResNet50이 정상 샘플에서 과일 중앙~표면 텍스처에 집중하는 패턴.",
+    )
+
+    add_single_image_slide(
+        prs, "결과 이미지 — Grad-CAM (궤양병 샘플)",
+        ASSETS / "nb07_gradcam_02.png",
+        caption="궤양병 감귤 샘플 Grad-CAM — 병변 추정 영역에 activation 집중",
+        notes="병변성 패턴을 가진 영역에 모델 attention이 몰림.",
+    )
 
     add_content_slide(prs, "분석 노트북 8종 (docs/analysis/)",
         [
